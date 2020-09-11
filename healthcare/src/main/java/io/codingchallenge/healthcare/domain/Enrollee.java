@@ -3,26 +3,10 @@
  */
 package io.codingchallenge.healthcare.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.Nullable;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,40 +16,25 @@ import lombok.NonNull;
  * @author v.huggila
  *
  */
-@Entity
-@Table(name = "t_usr_enroll")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Enrollee implements Serializable {
-
-	private static final long serialVersionUID = -6768418913570506311L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Schema(description = "")
+public class Enrollee {
+	@Schema(description = "Id of the Enroller", defaultValue = "1")
 	@NonNull
 	private Long id;
-
+	@Schema(description = "Name of the Enroller", defaultValue = "John")
 	@NonNull
-	@Column(name = "name")
 	private String name;
-
+	@Schema(description = "Activation status", defaultValue = "true")
 	@NonNull
-	@Column(name = "act_status")
 	private Boolean activationStatus;
-
-	@Nullable
-	@Column(name = "phone_num")
+	@Schema(description = "Phone Number of the Enroller", defaultValue = "4153145689")
 	private String phoneNumber;
-
+	@Schema(description = "Date of Birth of the Enroller", defaultValue = "100620")
 	@NonNull
-	@Column(name = "dob")
-	@Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dob;
-
-	@Nullable
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "id")
-	List<Dependant> dependants = new ArrayList<>();
+	private String dob;
+	private List<Dependant> dependants = new ArrayList<>();
 
 }

@@ -19,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import io.codingchallenge.healthcare.domain.Dependant;
-import io.codingchallenge.healthcare.domain.Enrollee;
+import io.codingchallenge.healthcare.persistance.entity.DependantEntity;
+import io.codingchallenge.healthcare.persistance.entity.EnrolleeEntity;
 
 /**
  * @author v.huggila
@@ -35,18 +35,18 @@ public class EnrollRepositoryTest {
 
 	/**
 	 * Test method for
-	 * {@link io.codingchallenge.healthcare.persistance.EnrollRepository#save(io.codingchallenge.healthcare.domain.Enrollee)}.
+	 * {@link io.codingchallenge.healthcare.persistance.EnrollRepository#save(io.codingchallenge.healthcare.persistance.entity.EnrolleeEntity)}.
 	 */
 
 	@Test
 	public void testAddEnrollee() throws Exception {
 
-		Enrollee enrollee = new Enrollee();
+		EnrolleeEntity enrollee = new EnrolleeEntity();
 		enrollee.setId(1L);
 		enrollee.setActivationStatus(true);
 		enrollee.setName("John");
 		enrollee.setDob(Date.valueOf(LocalDate.of(1980, 02, 12)));
-		Enrollee result = repository.save(enrollee);
+		EnrolleeEntity result = repository.save(enrollee);
 
 		assertEquals("John", result.getName());
 	}
@@ -54,16 +54,16 @@ public class EnrollRepositoryTest {
 	@Test
 	public void testAddEnrolleeWithDependants() throws Exception {
 
-		Enrollee enrollee = new Enrollee();
+		EnrolleeEntity enrollee = new EnrolleeEntity();
 		enrollee.setId(2L);
 		enrollee.setActivationStatus(true);
 		enrollee.setName("John");
 		enrollee.setDob(java.sql.Date.valueOf(LocalDate.of(1980, 02, 12)));
-		List<Dependant> dependants = Arrays.asList(
-				new Dependant(1L, "John Sr", Date.valueOf(LocalDate.of(1950, 12, 25))),
-				new Dependant(2L, "Kate", Date.valueOf(LocalDate.of(1955, 8, 22))));
+		List<DependantEntity> dependants = Arrays.asList(
+				new DependantEntity(1L, "John Sr", Date.valueOf(LocalDate.of(1950, 12, 25))),
+				new DependantEntity(2L, "Kate", Date.valueOf(LocalDate.of(1955, 8, 22))));
 		enrollee.setDependants(dependants);
-		Enrollee result = repository.save(enrollee);
+		EnrolleeEntity result = repository.save(enrollee);
 
 		assertEquals("John", result.getName());
 		assertEquals("John Sr", result.getDependants().get(0).getName());
@@ -72,19 +72,19 @@ public class EnrollRepositoryTest {
 
 	@Test
 	void testModifyEnrollee() {
-		Enrollee enrollee = new Enrollee();
+		EnrolleeEntity enrollee = new EnrolleeEntity();
 		enrollee.setId(3L);
 		enrollee.setActivationStatus(true);
 		enrollee.setName("John");
 		enrollee.setDob(Date.valueOf(LocalDate.of(1980, 02, 12)));
-		List<Dependant> dependants = Arrays.asList(
-				new Dependant(1L, "John Sr", Date.valueOf(LocalDate.of(1950, 12, 25))),
-				new Dependant(2L, "Kate", Date.valueOf(LocalDate.of(1955, 8, 22))));
+		List<DependantEntity> dependants = Arrays.asList(
+				new DependantEntity(1L, "John Sr", Date.valueOf(LocalDate.of(1950, 12, 25))),
+				new DependantEntity(2L, "Kate", Date.valueOf(LocalDate.of(1955, 8, 22))));
 		enrollee.setDependants(dependants);
 		repository.save(enrollee);
 		enrollee.setDob(Date.valueOf(LocalDate.of(1981, 02, 12)));
 		enrollee.getDependants().get(0).setDob(Date.valueOf(LocalDate.of(1950, 01, 25)));
-		Enrollee result = repository.save(enrollee);
+		EnrolleeEntity result = repository.save(enrollee);
 		assertEquals(1981, result.getDob().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear());
 		assertEquals(Month.JANUARY, result.getDependants().get(0).getDob().toInstant().atZone(ZoneId.systemDefault())
 				.toLocalDate().getMonth());
@@ -94,7 +94,7 @@ public class EnrollRepositoryTest {
 	@Test
 	void testRemoveEnrollee() {
 
-		Enrollee enrollee = new Enrollee();
+		EnrolleeEntity enrollee = new EnrolleeEntity();
 		enrollee.setId(4L);
 		enrollee.setActivationStatus(true);
 		enrollee.setName("Jake");

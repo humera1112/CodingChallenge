@@ -3,17 +3,7 @@
  */
 package io.codingchallenge.healthcare.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,21 +13,17 @@ import lombok.NonNull;
  * @author v.huggila
  *
  */
-@Entity
-@Table(name = "t_usr_dep")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dependant implements Serializable {
-
-	private static final long serialVersionUID = -5210684798104259983L;
-
+public class Dependant {
+	@Schema(description = "Id of the Dependant", defaultValue = "1")
+	@NonNull
+	private Long id;
+	@Schema(description = "Name of the Dependant", defaultValue = "Smith")
 	@NonNull
 	private String name;
-
+	@Schema(description = "Date of Birth of the Dependant", defaultValue = "100620")
 	@NonNull
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date dob;
-
+	private String dob;
 }

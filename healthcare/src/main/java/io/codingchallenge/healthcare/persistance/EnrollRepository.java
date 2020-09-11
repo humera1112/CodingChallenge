@@ -5,7 +5,7 @@ package io.codingchallenge.healthcare.persistance;
 
 import org.springframework.stereotype.Repository;
 
-import io.codingchallenge.healthcare.domain.Enrollee;
+import io.codingchallenge.healthcare.persistance.entity.EnrolleeEntity;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,6 +14,6 @@ import org.springframework.data.repository.CrudRepository;
  *
  */
 @Repository
-public interface EnrollRepository extends CrudRepository<Enrollee, Long> {
+public interface EnrollRepository extends CrudRepository<EnrolleeEntity, Long> {
 
 }
